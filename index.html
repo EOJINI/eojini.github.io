@@ -89,7 +89,6 @@
     <button id="loveBtn">❤️ 연애운</button>
     <button id="healthBtn">💪 건강운</button>
     <button id="moneyBtn">💰 재물운</button>
-    
   </div>
 
   <div class="result" id="result"></div>
@@ -101,7 +100,6 @@
       const loveBtn = document.getElementById('loveBtn');
       const healthBtn = document.getElementById('healthBtn');
       const moneyBtn = document.getElementById('moneyBtn');
-      
       const copyBtn = document.getElementById('copyBtn');
       const resultDiv = document.getElementById('result');
 
@@ -155,16 +153,9 @@
         localStorage.setItem(key, resultText);
       }
 
-      // function showRandomFortune() {
-        const types = ['love', 'health', 'money'];
-        const randomType = getRandomElement(types);
-        showFortune(randomType);
-      }
-
       loveBtn.onclick = () => showFortune('love');
       healthBtn.onclick = () => showFortune('health');
       moneyBtn.onclick = () => showFortune('money');
-      
       copyBtn.onclick = () => {
         const text = resultDiv.innerText;
         if (text) {
