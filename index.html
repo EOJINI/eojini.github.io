@@ -81,7 +81,7 @@
   </style>
 </head>
 <body>
-  <h1>🔮 오늘의 운세</h1>
+  <h1>🔮 사주 기반 오늘의 운세</h1>
   <p>생년월일을 입력하세요:</p>
   <input type="date" id="birthDate" />
 
@@ -160,8 +160,18 @@
         document.getElementById("sound").play();
         const label = type === 'love' ? '연애운' : type === 'health' ? '건강운' : '재물운';
         const fortune = getRandomElement(fortunes[type]);
-        const color = getRandomElement(luckyColors);
-        const item = getRandomElement(luckyItems);
+        const colorMap = {
+          love: { name: "분홍색", emoji: "💖" },
+          health: { name: "연두색", emoji: "💚" },
+          money: { name: "노란색", emoji: "💛" }
+        };
+        const color = colorMap[type];
+        const itemMap = {
+          love: { name: "립밤", emoji: "💄" },
+          health: { name: "텀블러", emoji: "🥤" },
+          money: { name: "지갑", emoji: "👛" }
+        };
+        const item = itemMap[type];
         const resultText = `[${label}] ${fortune}
 🌈 행운의 색: ${color.emoji} ${color.name}
 🎁 행운의 아이템: ${item.emoji} ${item.name}`;
