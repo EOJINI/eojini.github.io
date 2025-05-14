@@ -181,7 +181,9 @@
         }
         const key = getTodayKey(birth, type);
         const stored = localStorage.getItem(key);
-        if (stored) {
+        if (stored && (stored.includes('행운의 색') || stored.includes('행운의 아이템'))) {
+    localStorage.removeItem(key);
+} else if (stored) {
           resultDiv.innerText = stored;
           return;
         }
@@ -206,7 +208,9 @@
         }
         const key = getTodayKey(birth, 'color');
         const stored = localStorage.getItem(key);
-        if (stored) {
+        if (stored && (stored.includes('행운의 색') || stored.includes('행운의 아이템'))) {
+    localStorage.removeItem(key);
+} else if (stored) {
           resultDiv.innerText = stored;
           return;
         }
@@ -224,7 +228,9 @@
         }
         const key = getTodayKey(birth, 'item');
         const stored = localStorage.getItem(key);
-        if (stored) {
+        if (stored && (stored.includes('행운의 색') || stored.includes('행운의 아이템'))) {
+    localStorage.removeItem(key);
+} else if (stored) {
           resultDiv.innerText = stored;
           return;
         }
