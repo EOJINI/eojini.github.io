@@ -185,8 +185,6 @@
         const label = type === 'love' ? '연애운' : type === 'health' ? '건강운' : '재물운';
         const fortune = getRandomElement(fortunes[type]);
         const resultText = `[${label}] ${fortune.msg}
-🌈 행운의 색: ${fortune.color}
-🎁 행운의 아이템: ${fortune.item}`;
         resultDiv.innerText = resultText;
         localStorage.setItem(key, resultText);
       }
@@ -207,7 +205,8 @@
           return;
         }
         const colorOptions = ['🩵 하늘색', '💚 연두색', '💛 노란색', '💖 분홍색', '💙 남색', '💜 보라색', '🤍 하얀색', '🧡 주황색'];
-        const colorText = '🎨 오늘의 행운의 색은 ' + colorOptions[Math.floor(Math.random() * colorOptions.length)] + '입니다!';
+        const selected = colorOptions[Math.floor(Math.random() * colorOptions.length)];
+        const colorText = `🎨 오늘의 행운의 색은 ${selected}입니다!`;
         resultDiv.innerText = colorText;
         localStorage.setItem(key, colorText);
       };
@@ -225,7 +224,8 @@
           return;
         }
         const itemOptions = ['🔑 열쇠고리', '🪞 손거울', '🖊️ 볼펜', '📓 노트', '👛 지갑', '📚 책', '💇‍♀️ 머리핀', '🎀 헤어밴드', '💄 립밤', '🥤 텀블러'];
-        const itemText = '🎁 오늘의 행운의 아이템은 ' + itemOptions[Math.floor(Math.random() * itemOptions.length)] + '입니다!';
+        const selected = itemOptions[Math.floor(Math.random() * itemOptions.length)];
+        const itemText = '🎁 오늘의 행운의 아이템은 ${selected}입니다!`;
         resultDiv.innerText = itemText;
         localStorage.setItem(key, itemText);
       };
