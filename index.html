@@ -81,11 +81,13 @@
   </style>
 </head>
 <body>
-  <h1>🔮 사주 기반 오늘의 운세</h1>
+  <h1>🔮 오늘의 운세 🔮</h1>
   <p>생년월일을 입력하세요:</p>
   <input type="date" id="birthDate" />
 
   <div class="icons">
+    <button id="colorBtn">🎨 행운의 색</button>
+    <button id="itemBtn">🎁 행운의 아이템</button>
     <button id="loveBtn">❤️ 연애운</button>
     <button id="healthBtn">💪 건강운</button>
     <button id="moneyBtn">💰 재물운</button>
@@ -156,6 +158,40 @@
       loveBtn.onclick = () => showFortune('love');
       healthBtn.onclick = () => showFortune('health');
       moneyBtn.onclick = () => showFortune('money');
+      colorBtn.onclick = () => {
+        const birth = document.getElementById('birthDate').value;
+        if (!birth) {
+          resultDiv.innerText = '📅 생년월일을 입력해주세요.';
+          return;
+        }
+        const key = getTodayKey(birth, 'color');
+        const stored = localStorage.getItem(key);
+        if (stored) {
+          resultDiv.innerText = stored;
+          return;
+        }
+        const colorText = '🎨 오늘의 행운의 색은 💖 분홍색, 💚 연두색, 💛 노란색 중 하나입니다! 마음이 끌리는 색을 선택해보세요.';
+        resultDiv.innerText = colorText;
+        localStorage.setItem(key, colorText);
+      };
+
+      itemBtn.onclick = () => {
+        const birth = document.getElementById('birthDate').value;
+        if (!birth) {
+          resultDiv.innerText = '📅 생년월일을 입력해주세요.';
+          return;
+        }
+        const key = getTodayKey(birth, 'item');
+        const stored = localStorage.getItem(key);
+        if (stored) {
+          resultDiv.innerText = stored;
+          return;
+        }
+        const itemText = '🎁 오늘의 행운의 아이템은 💄 립밤, 🥤 텀블러, 👛 지갑 중 하나예요! 하나 챙겨보세요.';
+        resultDiv.innerText = itemText;
+        localStorage.setItem(key, itemText);
+      };
+
       copyBtn.onclick = () => {
         const text = resultDiv.innerText;
         if (text) {
