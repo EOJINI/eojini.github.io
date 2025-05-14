@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>✨ 오늘의 운세</title>
+  <title>🔮 오늘의 운세 🔮</title>
   <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet" />
   <style>
     body {
@@ -63,7 +63,7 @@
     }
     .icons button {
       margin: 5px;
-      min-width: 100px;
+      min-width: 140px;
     }
     @media (max-width: 600px) {
       h1 {
@@ -102,6 +102,8 @@
       const loveBtn = document.getElementById('loveBtn');
       const healthBtn = document.getElementById('healthBtn');
       const moneyBtn = document.getElementById('moneyBtn');
+      const colorBtn = document.getElementById('colorBtn');
+      const itemBtn = document.getElementById('itemBtn');
       const copyBtn = document.getElementById('copyBtn');
       const resultDiv = document.getElementById('result');
 
@@ -124,9 +126,9 @@
           { msg: "사랑은 준비된 자에게 찾아옵니다." }
         ],
         health: [
-          { msg: "가벼운 운동이 건강에 활력을 줄 거예요." },
-          { msg: "충분한 수면이 행운을 부를 거예요." },
-          { msg: "몸이 보내는 신호를 잘 관찰하세요." },
+          { msg: "가벼운 운동이 건강에 활력을 줍니다." },
+          { msg: "충분한 수면이 회복의 열쇠입니다." },
+          { msg: "몸이 보내는 신호를 잘 관찰해보세요." },
           { msg: "스트레칭으로 하루를 시작해보세요." },
           { msg: "따뜻한 차 한 잔이 몸에 좋은 날이에요." },
           { msg: "무리하지 말고 균형을 유지하세요." },
@@ -141,9 +143,9 @@
           { msg: "피로가 누적되기 전에 쉬어가세요." }
         ],
         money: [
-          { msg: "작은 절약이 큰 행운을 불러옵니다." },
+          { msg: "작은 절약이 큰 행운을 부릅니다." },
           { msg: "지출보다 수입에 집중하세요." },
-          { msg: "의외의 수입이 생길지도 몰라요!" },
+          { msg: "예상치 못한 수익이 들어올 수 있어요." },
           { msg: "충동구매는 오늘만큼은 피하세요." },
           { msg: "지혜로운 소비가 재산을 늘립니다." },
           { msg: "누군가의 조언이 재정에 도움이 됩니다." },
@@ -158,6 +160,9 @@
           { msg: "지금은 저축을 고민해볼 때입니다." }
         ]
       };
+
+      const colorOptions = ['🩵 하늘색', '💚 연두색', '💛 노란색', '💖 분홍색', '💙 남색', '💜 보라색', '🤍 하얀색', '🧡 주황색'];
+      const itemOptions = ['🔑 열쇠고리', '🪞 손거울', '🖊️ 볼펜', '📓 노트', '👛 지갑', '📚 책', '💇‍♀️ 머리핀', '🎀 헤어밴드', '💄 립밤', '🥤 텀블러'];
 
       function getRandomElement(arr) {
         return arr[Math.floor(Math.random() * arr.length)];
@@ -184,7 +189,7 @@
         document.getElementById("sound").play();
         const label = type === 'love' ? '연애운' : type === 'health' ? '건강운' : '재물운';
         const fortune = getRandomElement(fortunes[type]);
-        const resultText = `[${label}] ${fortune.msg}
+        const resultText = `[${label}] ${fortune.msg}`;
         resultDiv.innerText = resultText;
         localStorage.setItem(key, resultText);
       }
@@ -192,10 +197,11 @@
       loveBtn.onclick = () => showFortune('love');
       healthBtn.onclick = () => showFortune('health');
       moneyBtn.onclick = () => showFortune('money');
+
       colorBtn.onclick = () => {
-        const birth = document.getElementById('birthDate').value;
+        const birth = document.getElementById("birthDate").value;
         if (!birth) {
-          resultDiv.innerText = '📅 생년월일을 입력해주세요.';
+          resultDiv.innerText = "📅 생년월일을 입력해주세요.";
           return;
         }
         const key = getTodayKey(birth, 'color');
@@ -204,17 +210,16 @@
           resultDiv.innerText = stored;
           return;
         }
-        const colorOptions = ['🩵 하늘색', '💚 연두색', '💛 노란색', '💖 분홍색', '💙 남색', '💜 보라색', '🤍 하얀색', '🧡 주황색'];
-        const selected = colorOptions[Math.floor(Math.random() * colorOptions.length)];
-        const colorText = `🎨 오늘의 행운의 색은 ${selected}입니다!`;
-        resultDiv.innerText = colorText;
-        localStorage.setItem(key, colorText);
+        const selected = getRandomElement(colorOptions);
+        const resultText = `🎨 오늘의 행운의 색은 ${selected}입니다!`;
+        resultDiv.innerText = resultText;
+        localStorage.setItem(key, resultText);
       };
 
       itemBtn.onclick = () => {
-        const birth = document.getElementById('birthDate').value;
+        const birth = document.getElementById("birthDate").value;
         if (!birth) {
-          resultDiv.innerText = '📅 생년월일을 입력해주세요.';
+          resultDiv.innerText = "📅 생년월일을 입력해주세요.";
           return;
         }
         const key = getTodayKey(birth, 'item');
@@ -223,11 +228,10 @@
           resultDiv.innerText = stored;
           return;
         }
-        const itemOptions = ['🔑 열쇠고리', '🪞 손거울', '🖊️ 볼펜', '📓 노트', '👛 지갑', '📚 책', '💇‍♀️ 머리핀', '🎀 헤어밴드', '💄 립밤', '🥤 텀블러'];
-        const selected = itemOptions[Math.floor(Math.random() * itemOptions.length)];
-        const itemText = '🎁 오늘의 행운의 아이템은 ${selected}입니다!`;
-        resultDiv.innerText = itemText;
-        localStorage.setItem(key, itemText);
+        const selected = getRandomElement(itemOptions);
+        const resultText = `🎁 오늘의 행운의 아이템은 ${selected}입니다!`;
+        resultDiv.innerText = resultText;
+        localStorage.setItem(key, resultText);
       };
 
       copyBtn.onclick = () => {
