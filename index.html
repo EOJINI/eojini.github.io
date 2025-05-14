@@ -101,7 +101,7 @@
       const loveBtn = document.getElementById('loveBtn');
       const healthBtn = document.getElementById('healthBtn');
       const moneyBtn = document.getElementById('moneyBtn');
-      const randomBtn = document.getElementById('randomBtn');
+      
       const copyBtn = document.getElementById('copyBtn');
       const resultDiv = document.getElementById('result');
 
@@ -157,8 +157,8 @@
 
       // function showRandomFortune() {
         const types = ['love', 'health', 'money'];
-        // const randomType = getRandomElement(types);
-        // showFortune(randomType);
+        const randomType = getRandomElement(types);
+        showFortune(randomType);
       }
 
       loveBtn.onclick = () => showFortune('love');
