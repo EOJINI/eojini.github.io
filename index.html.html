@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>✨ 오늘의 운세</title>
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      font-family: 'Gowun Dodum', sans-serif;
+      background: linear-gradient(to bottom right, #fff8dc, #ffe4e1);
+      background-image: url('https://cdn.pixabay.com/photo/2017/10/16/09/00/stars-2854430_1280.jpg');
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      text-align: center;
+      padding: 20px;
+      margin: 0;
+      color: #333;
+    }
+    h1 {
+      font-size: 2.2em;
+      margin-bottom: 20px;
+      color: #6a5acd;
+    }
+    input, button {
+      font-size: 1em;
+      padding: 10px;
+      margin: 10px 5px;
+      border: none;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    button {
+      background-color: #ffd700;
+      color: #333;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    button:hover {
+      background-color: #ffcc00;
+    }
+    .result {
+      margin-top: 30px;
+      font-size: 1.3em;
+      background-color: rgba(255, 255, 255, 0.9);
+      display: inline-block;
+      padding: 20px;
+      border-radius: 12px;
+      max-width: 90%;
+      white-space: pre-line;
+    }
+    #copyBtn {
+      background-color: #6a5acd;
+      color: #fff;
+      margin-top: 20px;
+    }
+    .icons {
+      margin-top: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .icons button {
+      margin: 5px;
+      min-width: 100px;
+    }
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 1.6em;
+      }
+      input, button {
+        width: 90%;
+        font-size: 1em;
+      }
+      .result {
+        font-size: 1.1em;
+        padding: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>🔮 사주 기반 오늘의 운세</h1>
+  <p>생년월일을 입력하세요:</p>
+  <input type="date" id="birthDate" />
+
+  <div class="icons">
+    <button id="loveBtn">❤️ 연애운</button>
+    <button id="healthBtn">💪 건강운</button>
+    <button id="moneyBtn">💰 재물운</button>
+    <button id="randomBtn">🌈 랜덤 운세</button>
+  </div>
+
+  <div class="result" id="result"></div>
+  <button id="copyBtn">📋 운세 복사하기</button>
+  <audio id="sound" src="https://www.soundjay.com/button/beep-07.wav"></audio>
+
+  <script>
+    window.onload = function () {
+      const loveBtn = document.getElementById('loveBtn');
+      const healthBtn = document.getElementById('healthBtn');
+      const moneyBtn = document.getElementById('moneyBtn');
+      const randomBtn = document.getElementById('randomBtn');
+      const copyBtn = document.getElementById('copyBtn');
+      const resultDiv = document.getElementById('result');
+
+      const fortunes = {
+        love: ["마음이 통하는 인연이 찾아올 거예요.", "뜻밖의 설렘이 오늘 당신을 기다립니다.", "조금만 용기를 내면 좋은 일이 생겨요."],
+        health: ["가벼운 운동이 건강에 활력을 줄 거예요.", "충분한 수면이 행운을 부를 거예요.", "몸이 보내는 신호를 잘 관찰하세요."],
+        money: ["작은 절약이 큰 행운을 불러옵니다.", "지출보다 수입에 집중하세요.", "의외의 수입이 생길지도 몰라요!"]
+      };
+
+      const luckyColors = [
+        { name: "하늘색", emoji: "🩵" },
+        { name: "연두색", emoji: "💚" },
+        { name: "노란색", emoji: "💛" },
+        { name: "분홍색", emoji: "💖" },
+        { name: "남색", emoji: "💙" },
+        { name: "보라색", emoji: "💜" },
+        { name: "하얀색", emoji: "🤍" },
+        { name: "주황색", emoji: "🧡" }
+      ];
+
+      const luckyItems = [
+        { name: "열쇠고리", emoji: "🔑" },
+        { name: "손거울", emoji: "🪞" },
+        { name: "볼펜", emoji: "🖊️" },
+        { name: "노트", emoji: "📓" },
+        { name: "지갑", emoji: "👛" },
+        { name: "책", emoji: "📚" },
+        { name: "머리핀", emoji: "💇‍♀️" },
+        { name: "헤어밴드", emoji: "🎀" },
+        { name: "립밤", emoji: "💄" },
+        { name: "텀블러", emoji: "🥤" }
+      ];
+
+      function getRandomElement(arr) {
+        return arr[Math.floor(Math.random() * arr.length)];
+      }
+
+      function getTodayKey(birth, type) {
+        const today = new Date().toISOString().slice(0, 10);
+        return `fortune_${birth}_${type}_${today}`;
+      }
+
+      function showFortune(type) {
+        const birth = document.getElementById('birthDate').value;
+        if (!birth) {
+          resultDiv.innerText = '📅 생년월일을 입력해주세요.';
+          return;
+        }
+        const key = getTodayKey(birth, type);
+        const stored = localStorage.getItem(key);
+        if (stored) {
+          resultDiv.innerText = stored;
+          return;
+        }
+
+        document.getElementById("sound").play();
+        const label = type === 'love' ? '연애운' : type === 'health' ? '건강운' : '재물운';
+        const fortune = getRandomElement(fortunes[type]);
+        const color = getRandomElement(luckyColors);
+        const item = getRandomElement(luckyItems);
+        const resultText = `[${label}] ${fortune}
+🌈 행운의 색: ${color.emoji} ${color.name}
+🎁 행운의 아이템: ${item.emoji} ${item.name}`;
+        resultDiv.innerText = resultText;
+        localStorage.setItem(key, resultText);
+      }
+
+      function showRandomFortune() {
+        const types = ['love', 'health', 'money'];
+        const randomType = getRandomElement(types);
+        showFortune(randomType);
+      }
+
+      loveBtn.onclick = () => showFortune('love');
+      healthBtn.onclick = () => showFortune('health');
+      moneyBtn.onclick = () => showFortune('money');
+      randomBtn.onclick = () => showRandomFortune();
+      copyBtn.onclick = () => {
+        const text = resultDiv.innerText;
+        if (text) {
+          navigator.clipboard.writeText(text).then(() => {
+            alert('운세가 복사되었습니다!');
+          });
+        }
+      };
+    };
+  </script>
+</body>
+</html>
