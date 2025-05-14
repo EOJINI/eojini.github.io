@@ -89,7 +89,7 @@
     <button id="loveBtn">❤️ 연애운</button>
     <button id="healthBtn">💪 건강운</button>
     <button id="moneyBtn">💰 재물운</button>
-    <button id="randomBtn">🌈 랜덤 운세</button>
+    
   </div>
 
   <div class="result" id="result"></div>
@@ -106,34 +106,22 @@
       const resultDiv = document.getElementById('result');
 
       const fortunes = {
-        love: ["마음이 통하는 인연이 찾아올 거예요.", "뜻밖의 설렘이 오늘 당신을 기다립니다.", "조금만 용기를 내면 좋은 일이 생겨요."],
-        health: ["가벼운 운동이 건강에 활력을 줄 거예요.", "충분한 수면이 행운을 부를 거예요.", "몸이 보내는 신호를 잘 관찰하세요."],
-        money: ["작은 절약이 큰 행운을 불러옵니다.", "지출보다 수입에 집중하세요.", "의외의 수입이 생길지도 몰라요!"]
+        love: [
+          { msg: "마음이 통하는 인연이 찾아올 거예요.", color: "💖 분홍색", item: "💄 립밤" },
+          { msg: "뜻밖의 설렘이 오늘 당신을 기다립니다.", color: "💖 분홍색", item: "💄 립밤" },
+          { msg: "조금만 용기를 내면 좋은 일이 생겨요.", color: "💖 분홍색", item: "💄 립밤" }
+        ],
+        health: [
+          { msg: "가벼운 운동이 건강에 활력을 줄 거예요.", color: "💚 연두색", item: "🥤 텀블러" },
+          { msg: "충분한 수면이 행운을 부를 거예요.", color: "💚 연두색", item: "🥤 텀블러" },
+          { msg: "몸이 보내는 신호를 잘 관찰하세요.", color: "💚 연두색", item: "🥤 텀블러" }
+        ],
+        money: [
+          { msg: "작은 절약이 큰 행운을 불러옵니다.", color: "💛 노란색", item: "👛 지갑" },
+          { msg: "지출보다 수입에 집중하세요.", color: "💛 노란색", item: "👛 지갑" },
+          { msg: "의외의 수입이 생길지도 몰라요!", color: "💛 노란색", item: "👛 지갑" }
+        ]
       };
-
-      const luckyColors = [
-        { name: "하늘색", emoji: "🩵" },
-        { name: "연두색", emoji: "💚" },
-        { name: "노란색", emoji: "💛" },
-        { name: "분홍색", emoji: "💖" },
-        { name: "남색", emoji: "💙" },
-        { name: "보라색", emoji: "💜" },
-        { name: "하얀색", emoji: "🤍" },
-        { name: "주황색", emoji: "🧡" }
-      ];
-
-      const luckyItems = [
-        { name: "열쇠고리", emoji: "🔑" },
-        { name: "손거울", emoji: "🪞" },
-        { name: "볼펜", emoji: "🖊️" },
-        { name: "노트", emoji: "📓" },
-        { name: "지갑", emoji: "👛" },
-        { name: "책", emoji: "📚" },
-        { name: "머리핀", emoji: "💇‍♀️" },
-        { name: "헤어밴드", emoji: "🎀" },
-        { name: "립밤", emoji: "💄" },
-        { name: "텀블러", emoji: "🥤" }
-      ];
 
       function getRandomElement(arr) {
         return arr[Math.floor(Math.random() * arr.length)];
@@ -160,35 +148,23 @@
         document.getElementById("sound").play();
         const label = type === 'love' ? '연애운' : type === 'health' ? '건강운' : '재물운';
         const fortune = getRandomElement(fortunes[type]);
-        const colorMap = {
-          love: { name: "분홍색", emoji: "💖" },
-          health: { name: "연두색", emoji: "💚" },
-          money: { name: "노란색", emoji: "💛" }
-        };
-        const color = colorMap[type];
-        const itemMap = {
-          love: { name: "립밤", emoji: "💄" },
-          health: { name: "텀블러", emoji: "🥤" },
-          money: { name: "지갑", emoji: "👛" }
-        };
-        const item = itemMap[type];
-        const resultText = `[${label}] ${fortune}
-🌈 행운의 색: ${color.emoji} ${color.name}
-🎁 행운의 아이템: ${item.emoji} ${item.name}`;
+        const resultText = `[${label}] ${fortune.msg}
+🌈 행운의 색: ${fortune.color}
+🎁 행운의 아이템: ${fortune.item}`;
         resultDiv.innerText = resultText;
         localStorage.setItem(key, resultText);
       }
 
-      function showRandomFortune() {
+      // function showRandomFortune() {
         const types = ['love', 'health', 'money'];
-        const randomType = getRandomElement(types);
-        showFortune(randomType);
+        // const randomType = getRandomElement(types);
+        // showFortune(randomType);
       }
 
       loveBtn.onclick = () => showFortune('love');
       healthBtn.onclick = () => showFortune('health');
       moneyBtn.onclick = () => showFortune('money');
-      randomBtn.onclick = () => showRandomFortune();
+      
       copyBtn.onclick = () => {
         const text = resultDiv.innerText;
         if (text) {
