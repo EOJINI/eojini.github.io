@@ -170,7 +170,8 @@
           resultDiv.innerText = stored;
           return;
         }
-        const colorText = '🎨 오늘의 행운의 색은 💖 분홍색, 💚 연두색, 💛 노란색 중 하나입니다! 마음이 끌리는 색을 선택해보세요.';
+        const colorOptions = ['🩵 하늘색', '💚 연두색', '💛 노란색', '💖 분홍색', '💙 남색', '💜 보라색', '🤍 하얀색', '🧡 주황색'];
+        const colorText = '🎨 오늘의 행운의 색은 ' + colorOptions[Math.floor(Math.random() * colorOptions.length)] + '입니다!';
         resultDiv.innerText = colorText;
         localStorage.setItem(key, colorText);
       };
@@ -187,7 +188,8 @@
           resultDiv.innerText = stored;
           return;
         }
-        const itemText = '🎁 오늘의 행운의 아이템은 💄 립밤, 🥤 텀블러, 👛 지갑 중 하나예요! 하나 챙겨보세요.';
+        const itemOptions = ['🔑 열쇠고리', '🪞 손거울', '🖊️ 볼펜', '📓 노트', '👛 지갑', '📚 책', '💇‍♀️ 머리핀', '🎀 헤어밴드', '💄 립밤', '🥤 텀블러'];
+        const itemText = '🎁 오늘의 행운의 아이템은 ' + itemOptions[Math.floor(Math.random() * itemOptions.length)] + '입니다!';
         resultDiv.innerText = itemText;
         localStorage.setItem(key, itemText);
       };
